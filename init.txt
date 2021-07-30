@@ -7,3 +7,5 @@ git remote add @frontend https://github.com/portfolio-y0711/postype_frontend
 
 git subtree add --prefix=backend @backend main
 git subtree add --prefix=frontend @frontend main
+npx husky install
+npx husky add .husky/commit-msg npx commitlint --edit $1
