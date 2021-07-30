@@ -3,6 +3,7 @@ import ProductItem from "./ProductItem";
 import { api } from "../../api";
 import { useEffect, useState } from "react";
 import { IProduct } from "../../typings";
+import ProductDetail from "./detail/index";
 
 const Product = () => {
   const [products, setProducts] = useState({

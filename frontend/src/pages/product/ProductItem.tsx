@@ -23,7 +23,7 @@ const ProductItem = ({
 
           <div className="panel-body text-center">
             <h4>
-              <a href={`/product/${uuid}`} className="pro-title">
+              <a href={`/product/detail/${uuid}`} className="pro-title">
                 {name}
               </a>
             </h4>
