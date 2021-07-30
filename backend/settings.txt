@@ -1,0 +1,1 @@
+Preferences > Build... > Build project automatically
