@@ -1,4 +1,4 @@
-const ProductItem = ({ name, price }: { name: string, price: number }) => {
+const ProductItem = ({ uuid, name, price }: { uuid: string, name: string, price: number }) => {
   return (
     <>
             <div className="col-md-4">
@@ -12,7 +12,7 @@ const ProductItem = ({ name, price }: { name: string, price: number }) => {
 
                     <div className="panel-body text-center">
                         <h4>
-                            <a href="#" className="pro-title">
+                          <a href={`/product/${uuid}`} className="pro-title">
                               {name}
                             </a>
                         </h4>
