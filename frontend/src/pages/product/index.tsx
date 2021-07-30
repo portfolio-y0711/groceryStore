@@ -1,3 +1,5 @@
+import ProductItem from './ProductItem'
+import { api } from '../../api'
 
 const Product = () => {
   return (<>
@@ -27,44 +29,16 @@ const Product = () => {
     </div>
     <div className="col-md-9">
         <div className="row product-list">
-            <div className="col-md-4">
-                <section className="panel">
-                    <div className="pro-img-box">
-                        <img src="https://via.placeholder.com/250x220/FFB6C1/000000" alt="" />
-                        <a href="#" className="adtocart">
-                            <i className="fa fa-shopping-cart"></i>
-                        </a>
-                    </div>
 
-                    <div className="panel-body text-center">
-                        <h4>
-                            <a href="#" className="pro-title">
-                              신고산 배 
-                            </a>
-                        </h4>
-                        <p className="price">10,000</p>
-                    </div>
-                </section>
-            </div>
-            <div className="col-md-4">
-                <section className="panel">
-                    <div className="pro-img-box">
-                        <img src="https://via.placeholder.com/250x220/6495ED/000000" alt="" />
-                        <a href="#" className="adtocart">
-                            <i className="fa fa-shopping-cart"></i>
-                        </a>
-                    </div>
-
-                    <div className="panel-body text-center">
-                        <h4>
-                            <a href="#" className="pro-title">
-                              나주 배
-                            </a>
-                        </h4>
-                        <p className="price">15,000</p>
-                    </div>
-                </section>
-            </div>
+          {api.getProducts({ category: "fruits"}).map((fruit, index) => 
+            (
+              <ProductItem
+                key={index}
+                name={fruit.name}
+                price={fruit.price}
+              />)
+            )
+          }
         </div>
     </div>
 </div>
