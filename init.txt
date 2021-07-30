@@ -1,3 +1,9 @@
 curl https://start.spring.io/starter.zip -o backend -d bootVersion=2.4.1 -d applicationName=GroceryApiApplication -d dependencies=web,h2,data-jpa,security,devtools -d javaVersion=1.8 -d packageName=net.postype.api -d type=maven-project
 
 npx create-react-app frontend --template typescript
+
+git remote add @backend https://github.com/portfolio-y0711/postype_backend
+git remote add @frontend https://github.com/portfolio-y0711/postype_frontend
+
+git subtree add --prefix=backend @backend main
+git subtree add --prefix=frontend @frontend main
