@@ -24,15 +24,33 @@
 /*color: white;*/
 /*}*/
 
-.App-link {
-  color: #61dafb;
+/*.App-link {*/
+/*color: #61dafb;*/
+/*}*/
+
+/*@keyframes App-logo-spin {*/
+/*from {*/
+/*transform: rotate(0deg);*/
+/*}*/
+/*to {*/
+/*transform: rotate(360deg);*/
+/*}*/
+/*}*/
+
+.open > .dropdown-menu {
+  -webkit-transform: scale(1, 1);
+  transform: scale(1, 1);
+  opacity: 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dropdown-menu {
+  opacity: 0.3;
+  -webkit-transform-origin: top;
+  transform-origin: top;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-transform: scale(1, 0);
+  display: block;
+  transition: all 0.3s linear;
+  -webkit-transition: all 0.3s linear;
 }

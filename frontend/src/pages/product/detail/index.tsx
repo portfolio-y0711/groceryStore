@@ -1,18 +1,33 @@
-import {useEffect} from "react";
+import React, { useEffect, useState } from "react";
+
+interface IProductInfo {
+  name: string;
+  image: string;
+  description: string;
+  unitPrice: number;
+  bundlePrice: number;
+  categories: [];
+  tags: [];
+}
 
 const ProductDetail = (props: any) => {
+  const [productInfo, setProductInfo] = useState<IProductInfo>();
 
   useEffect(() => {
-    (async() => {
+    (async () => {
+      const productInfo: IProductInfo = await (
+        await fetch(
+          `http://localhost:8080/api/products/${props.match.params.category}/${props.match.params.id}`,
+          {
+            method: "GET",
+          }
+        )
+      ).json();
+      setProductInfo(productInfo);
+    })();
+  }, []);
 
-    })()
-
-  })
-  
-  const productInfo = () => {
-
-  }
-  return (
+  return productInfo ? (
     <>
       <div className="container bootdey">
         <div className="col-md-12"> </div>
@@ -24,81 +39,55 @@ const ProductDetail = (props: any) => {
               </a>
               <div className="pro-img-details">
                 <img
-                  src="https://via.placeholder.com/520x380/FFB6C1/000000"
+                  src={`http://localhost:8080/static/images/${productInfo?.image}.jpg`}
+                  width={520}
+                  height={300}
                   alt=""
                 />
-              </div>
-              <div className="pro-img-list">
-                <a href="#">
-                  <img
-                    src="https://via.placeholder.com/130x100/87CEFA/000000"
-                    alt=""
-                  />
-                </a>
-                <a href="#">
-                  <img
-                    src="https://via.placeholder.com/130x100/FF7F50/000000"
-                    alt=""
-                  />
-                </a>
-                <a href="#">
-                  <img
-                    src="https://via.placeholder.com/130x100/20B2AA/000000"
-                    alt=""
-                  />
-                </a>
-                <a href="#">
-                  <img
-                    src="https://via.placeholder.com/130x100/03FCF8/000000"
-                    alt=""
-                  />
-                </a>
               </div>
             </div>
             <div className="col-md-6">
               <h4 className="pro-d-title">
                 <a href="#" className="">
-                  상품명
+                  {productInfo?.name}
                 </a>
               </h4>
-              <p>
-                상품 상세 설명
-              </p>
+              <p>{productInfo?.description}</p>
               <div className="product_meta">
                 <span className="posted_in">
-                  <strong>Categories:</strong>
-                  <a rel="tag" href="#">
-                    청과물
-                  </a>
-                  ,
-                  <a rel="tag" href="#">
-                    야채{" "}
-                  </a>
-                  ,
-                  <a rel="tag" href="#">
-                    당일배송
-                  </a>
+                  <strong>Tags:</strong>
+                  {productInfo?.tags.map((tag, index, arr) => {
+                    if (index < arr.length - 1) {
+                      return (
+                        <React.Fragment key={index}>
+                          <a rel="tag" href="#">
+                            {tag}
+                          </a>
+                          ,
+                        </React.Fragment>
+                      );
+                    } else {
+                      return (
+                        <a key={index} rel="tag" href="#">
+                          당일배송
+                        </a>
+                      );
+                    }
+                  })}
                 </span>
                 <br />
-                <span className="tagged_as">
-                  <strong>Tags:</strong>{" "}
-                  <a rel="tag" href="#">
-                    mens
-                  </a>
-                  ,{" "}
-                  <a rel="tag" href="#">
-                    womens
-                  </a>
-                  .
-                </span>
               </div>
               <div className="m-bot15">
                 {" "}
-                <strong>Price : </strong>{" "}
-                  <br/>
-                <span className="amount-old">단품가격: 800</span>{" "}
-                  <br/>
-                <span className="pro-price"> 상자(1box): 10000</span>
+                <strong>Price : </strong> <br />
+                <span className="amount-old">
+                  단품가격: {productInfo?.unitPrice}
+                </span>{" "}
+                <br />
+                <span className="pro-price">
+                  {" "}
+                  상자(1box): {productInfo?.bundlePrice}
+                </span>
               </div>
               <div className="form-group">
                 <label>Quantity</label>
@@ -118,6 +107,8 @@ const ProductDetail = (props: any) => {
         </section>
       </div>
     </>
+  ) : (
+    <></>
   );
 };
 

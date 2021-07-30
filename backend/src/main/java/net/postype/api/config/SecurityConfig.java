@@ -28,18 +28,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             cors.setMaxAge(3600L);
             return cors;
 
-        }).and().authorizeRequests()
+        })
+                .and().authorizeRequests()
+                .antMatchers("/").permitAll()
                 .antMatchers("/api/health").permitAll()
-                .antMatchers("/api/fruits").permitAll()
-                .antMatchers("/api/vegetables").permitAll()
+                .antMatchers("/api/token").permitAll()
+                .antMatchers("/api/cookie").permitAll()
+                .antMatchers("/api/checkCookie").permitAll()
+                .antMatchers("/images/**").permitAll()
+                .antMatchers("/static/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/api/products/**").permitAll()
+                .antMatchers("/api/fruits/**").permitAll()
+                .antMatchers("/api/vegetables/**").permitAll()
                 .anyRequest().authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
-                "/swagger-ui.html", "/webjars/**");
+        web
+            .ignoring()
+            .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
+            "/swagger-ui.html", "/webjars/**", "/h2-console/**", "/favicon.ico");
     }
 }
 

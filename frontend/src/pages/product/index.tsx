@@ -5,29 +5,29 @@ import { useEffect, useState } from "react";
 import { IProduct } from "../../typings";
 import ProductDetail from "./detail/index";
 
-const Product = () => {
-  const [products, setProducts] = useState({
-    fruits: [],
-    vegetables: [],
-  });
+const Product = (props: any) => {
+  const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
     (async () => {
-      const fruits = await (
-        await fetch("http://localhost:8080/api/fruits", {
-          method: "GET",
-        })
-      ).json();
-      console.log(fruits[0]);
-      const vegetables = await (
-        await fetch("http://localhost:8080/api/vegetables", {
-          method: "GET",
-        })
-      ).json();
-      setProducts({
-        fruits,
-        vegetables,
-      });
+      let products;
+      if (props && Object.keys(props.match.params).length > 0) {
+        const category = props.match.params.category;
+        const requestUrl = `http://localhost:8080/api/products/${category}`;
+        products = await (
+          await fetch(requestUrl, {
+            method: "GET",
+          })
+        ).json();
+      } else {
+        const { fruits, vegetables } = await (
+          await fetch("http://localhost:8080/api/products", {
+            method: "GET",
+          })
+        ).json();
+        products = [...fruits, ...vegetables];
+      }
+      setProducts(products);
     })();
   }, []);
 
@@ -45,16 +45,21 @@ const Product = () => {
             </div>
           </section>
           <section className="panel">
-            <header className="panel-heading">Grocery</header>
+            <header className="panel-heading">
+              <a href="/product" className="active">
+                <i className=""></i>
+                Grocery
+              </a>
+            </header>
             <div className="panel-body">
               <ul className="nav prod-cat">
                 <li>
-                  <a href="#" className="active">
+                  <a href="/product/fruits" className="active">
                     <i className=""></i> Fruits
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="/product/vegetables">
                     <i className="fas fa-carrot"></i> Vegetables{" "}
                   </a>
                 </li>
@@ -64,18 +69,18 @@ const Product = () => {
         </div>
         <div className="col-md-9">
           <div className="row product-list">
-            {([...products.fruits, ...products.vegetables] as IProduct[]).map(
-              (product, index) => {
-                return (
-                  <ProductItem
-                    key={index}
-                    uuid={product.uuid}
-                    name={product.name}
-                    price={product.price}
-                  />
-                );
-              }
-            )}
+            {products.map((product, index) => {
+              return (
+                <ProductItem
+                  key={index}
+                  uuid={product.uuid}
+                  image={product.image}
+                  category={product.category}
+                  name={product.name}
+                  price={product.price}
+                />
+              );
+            })}
           </div>
         </div>
       </div>

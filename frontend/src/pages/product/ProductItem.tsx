@@ -1,10 +1,14 @@
 const ProductItem = ({
   uuid,
   name,
+  category,
+  image,
   price,
 }: {
   uuid: string;
   name: string;
+  category: string;
+  image: string;
   price: number;
 }) => {
   return (
@@ -13,17 +17,22 @@ const ProductItem = ({
         <section className="panel">
           <div className="pro-img-box">
             <img
-              src="https://via.placeholder.com/250x220/FFB6C1/000000"
+              src={`http://localhost:8080/static/images/${image}.jpg`}
+              height="200"
+              width="220"
               alt=""
             />
+            <br />
+            {/*
             <a href="#" className="adtocart">
               <i className="fa fa-shopping-cart"></i>
             </a>
+            */}
           </div>
 
           <div className="panel-body text-center">
             <h4>
-              <a href={`/product/detail/${uuid}`} className="pro-title">
+              <a href={`/product/${category}/${uuid}`} className="pro-title">
                 {name}
               </a>
             </h4>

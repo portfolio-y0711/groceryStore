@@ -6,6 +6,8 @@ import Home from "../pages/home";
 import Product from "../pages/product";
 import Login from "../pages/login";
 import ProductDetail from "../pages/product/detail";
+import NavBar from "./Navbar";
+import { INav } from "../typings/index";
 
 const PageNotFound = () => {
   return (
@@ -15,30 +17,60 @@ const PageNotFound = () => {
   );
 };
 
+const navTables: INav[] = [
+  {
+    href: "/login",
+    name: "login",
+  },
+  {
+    href: "/product",
+    name: "product",
+  },
+];
+
+interface IRoute {
+  path: string;
+  exact: boolean;
+  component: (props?: any) => JSX.Element;
+}
+const routeTables: IRoute[] = [
+  {
+    path: "/product/:category/:id",
+    exact: true,
+    component: ProductDetail,
+  },
+  {
+    path: "/product/:category",
+    exact: true,
+    component: Product,
+  },
+  {
+    path: "/product",
+    exact: true,
+    component: Product,
+  },
+  {
+    path: "/login",
+    exact: true,
+    component: Login,
+  },
+];
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <li>
-          <a href="/home">home</a>
-        </li>
-        <li>
-          <a href="/product">product</a>
-        </li>
-        <li>
-          <a href="/login">login</a>
-        </li>
-      </header>
+      <NavBar />
       <Router>
         <Switch>
-          <Route path="/home" exact={true} component={Home} />
-          <Route path="/product" exact={true} component={Product} />
           <Route
-            path="/product/detail/:id"
+            path="/product/:category/:id"
             exact={true}
             component={ProductDetail}
           />
+          <Route path="/product/:category" exact={true} component={Product} />
+          <Route path="/product" exact={true} component={Product} />
           <Route path="/login" exact={true} component={Login} />
+          <Route path="/" exact={true} component={Home} />
           <Route exact={false} component={PageNotFound} />
         </Switch>
       </Router>
