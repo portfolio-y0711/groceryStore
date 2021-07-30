@@ -1,22 +1,49 @@
-import React from 'react';
 import './index.css';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Home from '../pages/home'
+import Product from '../pages/product'
+import Login from '../pages/login'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <li>
+          <a href="/home">
+            home
+          </a>
+        </li>
+        <li>
+          <a href="/product">
+            product
+          </a>
+        </li>
+        <li>
+          <a href="/login">
+            login
+          </a>
+        </li>
       </header>
+      <Router>
+        <Switch>
+          <Route
+            path="/home"
+            exact={true}
+            component={Home}
+          />
+          <Route
+            path="/product"
+            exact={true}
+            component={Product}
+          />
+          <Route
+            path="/login"
+            exact={true}
+            component={Login}
+          />
+        </Switch>
+      </Router>
     </div>
   );
 }
