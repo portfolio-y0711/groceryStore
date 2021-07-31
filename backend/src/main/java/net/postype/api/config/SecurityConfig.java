@@ -1,15 +1,22 @@
 package net.postype.api.config;
 
+import net.postype.api.config.jwt.AuthUserDetailsService;
+import net.postype.api.config.jwt.JwtFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
@@ -17,6 +24,23 @@ import java.util.Arrays;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private JwtFilter jwtFilter;
+
+    @Autowired
+    private AuthUserDetailsService userDetailsService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -32,17 +56,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/api/health").permitAll()
-                .antMatchers("/api/token").permitAll()
-                .antMatchers("/api/cookie").permitAll()
+                .antMatchers("/api/auth/login").permitAll()
+                .antMatchers("/api/auth/logout").permitAll()
                 .antMatchers("/api/checkCookie").permitAll()
+
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/api/products/**").permitAll()
-                .antMatchers("/api/fruits/**").permitAll()
-                .antMatchers("/api/vegetables/**").permitAll()
+//                .antMatchers("/api/products/**").permitAll()
+//                .antMatchers("/api/fruits/**").permitAll()
+//                .antMatchers("/api/vegetables/**").permitAll()
                 .anyRequest().authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

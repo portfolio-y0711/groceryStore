@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const ProductItem = ({
   uuid,
   name,
@@ -32,9 +34,9 @@ const ProductItem = ({
 
           <div className="panel-body text-center">
             <h4>
-              <a href={`/product/${category}/${uuid}`} className="pro-title">
+              <Link to={`/product/${category}/${uuid}`} className="pro-title">
                 {name}
-              </a>
+              </Link>
             </h4>
             <p className="price">{price}</p>
           </div>

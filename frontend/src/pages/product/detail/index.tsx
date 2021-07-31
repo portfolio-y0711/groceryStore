@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom'
+import { API } from '../../../api'
 
 interface IProductInfo {
   name: string;
@@ -15,14 +17,10 @@ const ProductDetail = (props: any) => {
 
   useEffect(() => {
     (async () => {
-      const productInfo: IProductInfo = await (
-        await fetch(
-          `http://localhost:8080/api/products/${props.match.params.category}/${props.match.params.id}`,
-          {
-            method: "GET",
-          }
-        )
-      ).json();
+
+      const category = props.match.params.category
+      const uuid = props.match.params.id
+      const productInfo: IProductInfo = await (await (API.getProductWithCategoryAndUuid(category, uuid))).data
       setProductInfo(productInfo);
     })();
   }, []);
@@ -34,9 +32,15 @@ const ProductDetail = (props: any) => {
         <section className="panel">
           <div className="panel-body">
             <div className="col-md-6">
+              { /*
               <a href="/product" className="adtocart">
                 <i className="fa fa-backward">상품 카테고리로 돌아가기</i>
               </a>
+                 */
+              }
+              <Link to={"/product"}>
+                상품 카테고리로 돌아가기
+              </Link>
               <div className="pro-img-details">
                 <img
                   src={`http://localhost:8080/static/images/${productInfo?.image}.jpg`}

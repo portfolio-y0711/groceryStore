@@ -1,12 +1,10 @@
 package net.postype.api.typings;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class JwtRequest {
     private String username;
     private String password;

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Map.entry;
-import static net.postype.api.util.DaoUtils.toSingleton;
+import static net.postype.api.repository.dao.DaoUtils.toSingleton;
 
 @Component
 public class FakeRepository {

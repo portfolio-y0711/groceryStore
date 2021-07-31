@@ -1,47 +1,45 @@
-import { IProduct } from "../typings";
 import axios from "axios";
+import { authHeader } from "./utils/auth-header"
 
-export const api = (() => {
-  const routingTable: { [name: string]: IProduct[] } = {
-    fruits: [
-      {
-        uuid: "",
-        name: "신고산 배",
-        image: "pears_01",
-        category: "red_potato",
-        price: 10000,
-      },
-      {
-        uuid: "",
-        name: "나주 배",
-        image: "pears_02",
-        category: "red_potato",
-        price: 14000,
-      },
-    ],
-    vegetables: [
-      {
-        uuid: "",
-        name: "강원도 고랭지 배추",
-        image: "lettuce",
-        category: "red_potato",
-        price: 10000,
-      },
-      {
-        uuid: "",
-        name: "강원도 홍감자",
-        image: "red_potato",
-        category: "red_potato",
-        price: 14000,
-      },
-    ],
-  };
-  const getProducts = ({ category }: { category: string }): IProduct[] => {
-    return routingTable[category];
-  };
-  const getAxiosProducts = ({ category }: { category: string }) => {};
+const AUTH_URL = "http://localhost:8080/api/auth"
+const API_URL = "http://localhost:8080/api"
+
+export const auth = (() => {
+  const login = ()=> {
+    return axios.post(AUTH_URL + "/login", {
+      username: 'michael',
+      password: '4fae'
+    })
+  }
+  const logout = ()=> {
+    return axios.post(AUTH_URL + "/logout", {})
+  }
   return {
-    getProducts,
-    getAxiosProducts,
-  };
+    login,
+    logout
+  }
+})();
+
+
+export const API = (() => {
+  const getProductWithCategoryAndUuid = (category: string, uuid: string)=> {
+    return axios.get(API_URL + `/products/${category}/${uuid}`, {
+      headers: authHeader()
+    })
+  }
+  const getProductsWithCategory = (category: string)=> {
+    return axios.get(API_URL + `/products/${category}`, {
+      headers: authHeader()
+    })
+  }
+  const getAllProducts = ()=> {
+    return axios.get(API_URL + `/products`, {
+      headers: authHeader()
+    })
+  }
+  return {
+    getProductWithCategoryAndUuid,
+    getProductsWithCategory,
+    getAllProducts
+  }
 })();

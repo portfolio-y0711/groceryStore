@@ -1,4 +1,4 @@
-package net.postype.api.util;
+package net.postype.api.repository.dao;
 
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
