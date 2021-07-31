@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { API_BASE_URL } from '../../api/index';
+import { API_BASE_URL } from '../../api/index'
 
 const ProductItem = ({
   uuid,
@@ -8,11 +8,11 @@ const ProductItem = ({
   image,
   price,
 }: {
-  uuid: string;
-  name: string;
-  category: string;
-  image: string;
-  price: number;
+  uuid: string
+  name: string
+  category: string
+  image: string
+  price: number
 }) => {
   return (
     <>
@@ -32,15 +32,15 @@ const ProductItem = ({
           </div>
 
           <div className="panel-body text-center">
-              <Link to={`/product/${category}/${uuid}`} className="pro-title">
-                {name}
-              </Link>
+            <Link to={`/product/${category}/${uuid}`} className="pro-title">
+              {name}
+            </Link>
             <p className="price">{price}</p>
           </div>
         </section>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ProductItem;
+export default ProductItem

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 
 $color: #54fe55;
 $color2: #1a4f1a;
@@ -12,7 +12,7 @@ body {
 }
 
 #app.notFound {
-  font-family: "Press Start 2P", cursive;
+  font-family: 'Press Start 2P', cursive;
   box-sizing: border-box;
 }
 #app {

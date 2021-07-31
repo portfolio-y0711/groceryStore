@@ -1,30 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { API } from '../../../api'
-import { API_BASE_URL } from '../../../api/index';
+import { API_BASE_URL } from '../../../api/index'
 
 interface IProductInfo {
-  name: string;
-  image: string;
-  description: string;
-  unitPrice: number;
-  bundlePrice: number;
-  categories: [];
-  tags: [];
+  name: string
+  image: string
+  description: string
+  unitPrice: number
+  bundlePrice: number
+  categories: []
+  tags: []
 }
 
 const ProductDetail = (props: any) => {
-  const [productInfo, setProductInfo] = useState<IProductInfo>();
+  const [productInfo, setProductInfo] = useState<IProductInfo>()
 
   useEffect(() => {
-    (async () => {
-
+    ;(async () => {
       const category = props.match.params.category
       const uuid = props.match.params.id
-      const productInfo: IProductInfo = await (await (API.getProductWithCategoryAndUuid(category, uuid))).data
-      setProductInfo(productInfo);
-    })();
-  }, []);
+      const productInfo: IProductInfo = await (
+        await API.getProductWithCategoryAndUuid(category, uuid)
+      ).data
+      setProductInfo(productInfo)
+    })()
+  }, [])
 
   return productInfo ? (
     <>
@@ -33,15 +34,12 @@ const ProductDetail = (props: any) => {
         <section className="panel">
           <div className="panel-body">
             <div className="col-md-6">
-              { /*
+              {/*
               <a href="/product" className="adtocart">
                 <i className="fa fa-backward">상품 카테고리로 돌아가기</i>
               </a>
-                 */
-              }
-              <Link to={"/product"}>
-                상품 카테고리로 돌아가기
-              </Link>
+                 */}
+              <Link to={'/product'}>상품 카테고리로 돌아가기</Link>
               <div className="pro-img-details">
                 <img
                   src={`${API_BASE_URL}/static/images/${productInfo?.image}.jpg`}
@@ -70,37 +68,27 @@ const ProductDetail = (props: any) => {
                           </a>
                           ,
                         </React.Fragment>
-                      );
+                      )
                     } else {
                       return (
                         <a key={index} rel="tag" href="#">
                           당일배송
                         </a>
-                      );
+                      )
                     }
                   })}
                 </span>
                 <br />
               </div>
               <div className="m-bot15">
-                {" "}
+                {' '}
                 <strong>Price : </strong> <br />
-                <span className="amount-old">
-                  단품가격: {productInfo?.unitPrice}
-                </span>{" "}
-                <br />
-                <span className="pro-price">
-                  {" "}
-                  상자(1box): {productInfo?.bundlePrice}
-                </span>
+                <span className="amount-old">단품가격: {productInfo?.unitPrice}</span> <br />
+                <span className="pro-price"> 상자(1box): {productInfo?.bundlePrice}</span>
               </div>
               <div className="form-group">
                 <label>Quantity</label>
-                <input
-                  type="quantiy"
-                  placeholder="1"
-                  className="form-control quantity"
-                />
+                <input type="quantiy" placeholder="1" className="form-control quantity" />
               </div>
               <p>
                 <button className="btn btn-round btn-secondary" type="button">
@@ -114,7 +102,7 @@ const ProductDetail = (props: any) => {
     </>
   ) : (
     <></>
-  );
-};
+  )
+}
 
-export default ProductDetail;
+export default ProductDetail
