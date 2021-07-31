@@ -59,13 +59,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/login").permitAll()
                 .antMatchers("/api/auth/logout").permitAll()
                 .antMatchers("/api/checkCookie").permitAll()
+                .antMatchers("/api/**").permitAll()
 
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-//                .antMatchers("/api/products/**").permitAll()
-//                .antMatchers("/api/fruits/**").permitAll()
-//                .antMatchers("/api/vegetables/**").permitAll()
                 .anyRequest().authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

@@ -24,3 +24,8 @@ spring:
     view:
       suffix: .html
 
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+

@@ -32,9 +32,6 @@ public class AuthController {
 
     @PostMapping("/api/auth/login")
     public Map<String, Object> login(@RequestBody JwtRequest request, HttpServletResponse response) throws Exception {
-        System.out.println(request.getUsername());
-        System.out.println(request.getPassword());
-
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(

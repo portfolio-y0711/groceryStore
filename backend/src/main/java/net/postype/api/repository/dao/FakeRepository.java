@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Map.entry;
 import static net.postype.api.repository.dao.DaoUtils.toSingleton;
@@ -23,9 +24,10 @@ public class FakeRepository {
                     )),
                     entry("vegetables", Arrays.asList(
                             new Product("w8bj", "vegetables", "강원도 고랭지 배추", "cabbage", 1000L),
-                            new Product("2irt", "vegetable", "강원도 홍감자", "potato_red", 800L),
-                            new Product("9ti2", "vegetable", "돌산 생갓", "mustardleaf", 800L),
-                            new Product("01rt", "vegetable", "제주도 브로콜리", "brocolli", 800L)
+                            new Product("2irt", "vegetables", "강원도 홍감자", "potato_red", 800L),
+                            new Product("9ti2", "vegetables", "돌산 생갓", "mustardleaf", 800L),
+                            new Product("s78f", "vegetables" , "춘천 토마토", "tomato", 300L),
+                            new Product("01rt", "vegetables", "제주도 브로콜리", "brocolli", 800L)
                     ))
             );
 
@@ -38,16 +40,30 @@ public class FakeRepository {
                             new ProductDetail("f7pk", "제주도 파인애플", "pineapple", "fruits", "청정 지역에서 자라는 무농약 무방부제 열대과일", 800L, 16000L, new String[]{""}, new String[]{""})
                             )),
                     entry("vegetables", Arrays.asList(
-                        new ProductDetail("w8bj", "강원도 고랭지 배추", "cabbage", "vegetables", "맑고 깨끗한 자연환경에서 자란 좋은 품종의 평창 고랭지 배추", 1000L, 20000L, new String[]{""}, new String[]{""}),
-                            new ProductDetail("2irt", "강원도 홍감자", "potato_red", "vegetable", "7월에 수확 속이노란 붉은 강원도 홍감자", 800L, 16000L, new String[]{""}, new String[]{""}),
-                            new ProductDetail("9ti2", "돌산 생갓", "mustardleaf", "vegetable", "여수 특산품 온화한 돌산 지역에서 해풍을 맞고 자란 노지 돌산 갓", 800L, 16000L, new String[]{""}, new String[]{""}),
-                            new ProductDetail("01rt", "제주도 브로콜리", "brocolli", "vegetable", "항산화 물질과 다량의 칼슘 함유로 기미와 색소 침착 등의 피부 문제를 해결해주고, 노화 방지에도 탁월한 제주도 브로콜리", 500L, 10000L, new String[]{""}, new String[]{""})
+                            new ProductDetail("w8bj", "강원도 고랭지 배추", "cabbage", "vegetables", "맑고 깨끗한 자연환경에서 자란 좋은 품종의 평창 고랭지 배추", 1000L, 20000L, new String[]{""}, new String[]{""}),
+                            new ProductDetail("2irt", "강원도 홍감자", "potato_red", "vegetables", "7월에 수확 속이노란 붉은 강원도 홍감자", 800L, 16000L, new String[]{""}, new String[]{""}),
+                            new ProductDetail("s78f", "춘천 토마토" , "tomato", "vegetables", "소양강 물을 머금고, 맑은 공기 속에서 자라 뛰어난 품질을 자랑하는 당도와 색깔이 우수한 춘천 토마토" , 300L, 6000L, new String[]{""}, new String[]{""}),
+                            new ProductDetail("9ti2", "돌산 생갓", "mustardleaf", "vegetables", "여수 특산품 온화한 돌산 지역에서 해풍을 맞고 자란 노지 돌산 갓", 800L, 16000L, new String[]{""}, new String[]{""}),
+                            new ProductDetail("01rt", "제주도 브로콜리", "brocolli", "vegetables", "항산화 물질과 다량의 칼슘 함유로 기미와 색소 침착 등의 피부 문제를 해결해주고, 노화 방지에도 탁월한 제주도 브로콜리", 500L, 10000L, new String[]{""}, new String[]{""})
                     ))
             );
 
     public Map<String, List<Product>> findAllProducts() {
         return this.products;
     }
+
+    public List<Product> findProductByKeyWord(String keyword) {
+        List<Product> filtered = this.products
+                .values()
+                .stream()
+                .flatMap(list -> list.stream())
+                .filter(product ->
+                        Arrays.asList(product.getName().split(" ")).contains(keyword)
+                ).collect(Collectors.toList());
+        System.out.println(filtered);
+        return filtered;
+    }
+
 
     public List<Product> findProductByCategory(String category) {
         return this.products.get(category);

@@ -1,8 +1,11 @@
 import axios from "axios";
 import { authHeader } from "./utils/auth-header"
 
-const AUTH_URL = "http://localhost:8080/api/auth"
-const API_URL = "http://localhost:8080/api"
+export const API_BASE_URL = process.env.REACT_APP_API_ROOT;
+export const HOME_URL = process.env.REACT_APP_HOME_URL;
+
+const AUTH_URL = `${API_BASE_URL}/api/auth`
+const API_URL = `${API_BASE_URL}/api`
 
 export const auth = (() => {
   const login = ()=> {
@@ -22,6 +25,11 @@ export const auth = (() => {
 
 
 export const API = (() => {
+  const getProductsWithKeyword = (keyword: string)=> {
+    return axios.get(API_URL + `/products/search?keyword=${keyword}`, {
+      headers: authHeader()
+    })
+  }
   const getProductWithCategoryAndUuid = (category: string, uuid: string)=> {
     return axios.get(API_URL + `/products/${category}/${uuid}`, {
       headers: authHeader()
@@ -38,6 +46,7 @@ export const API = (() => {
     })
   }
   return {
+    getProductsWithKeyword,
     getProductWithCategoryAndUuid,
     getProductsWithCategory,
     getAllProducts

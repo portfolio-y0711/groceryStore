@@ -4,10 +4,7 @@ import net.postype.api.repository.dao.FakeRepository;
 import net.postype.api.repository.entity.Product;
 import net.postype.api.repository.entity.ProductDetail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -42,5 +39,11 @@ public class ApiController {
    @GetMapping("/products/{category}/{uuid}")
    public ProductDetail getProduct(@PathVariable String category, @PathVariable String uuid) {
       return fakeRepository.findProductByCatUuid(category, uuid);
+   }
+
+   @GetMapping("/products/search")
+   public List<Product> getProductsByKeyword(@RequestParam String keyword) {
+      System.out.println(keyword);
+      return fakeRepository.findProductByKeyWord(keyword);
    }
 }

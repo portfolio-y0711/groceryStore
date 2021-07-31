@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import { API } from '../../../api'
+import { API_BASE_URL } from '../../../api/index';
 
 interface IProductInfo {
   name: string;
@@ -43,7 +44,7 @@ const ProductDetail = (props: any) => {
               </Link>
               <div className="pro-img-details">
                 <img
-                  src={`http://localhost:8080/static/images/${productInfo?.image}.jpg`}
+                  src={`${API_BASE_URL}/static/images/${productInfo?.image}.jpg`}
                   width={520}
                   height={300}
                   alt=""

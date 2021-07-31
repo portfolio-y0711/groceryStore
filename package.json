@@ -9,6 +9,7 @@
   },
   "scripts": {
     "push:front": "git subtree --prefix backend push @frontend main",
-    "push:back": "git subtree push --prefix backend @backend main"
+    "push:back": "git subtree push --prefix backend @backend main",
+    "remote:start": "bash scripts/deploy-remote.sh"
   }
 }
