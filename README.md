@@ -2,6 +2,12 @@
 
 > full-stack web development
 
+### Demo
+
+[![데모](http://img.youtube.com/vi/b--7psWkZtA/0.jpg)](https://youtu.be/b--7psWkZtA?t=0s)
+
+[Trello 칸반보드 가기 >>>>>](https://trello.com/b/xh6JGvBB/grocery-store)
+
 ### Component
 
 - Frontend Server
@@ -17,8 +23,6 @@
   - Spring boot
 
     - web
-
-    - spring-data
 
     - devtools
 
